@@ -4,7 +4,7 @@
 
 A tool that automatically generates Software Bill of Materials (SBOMs) and captures dynamically linked dependencies at runtime, then merges them back into the SBOM.
 
-## 📊 Demo Results
+## Demo Results
 
 See [DEMO-RESULTS.md](DEMO-RESULTS.md) for actual test results and performance metrics from running the tool.
 
