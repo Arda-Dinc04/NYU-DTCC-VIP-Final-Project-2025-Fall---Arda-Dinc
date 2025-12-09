@@ -1,12 +1,12 @@
-# SBOM Generator with Dynamic Dependency Capture
+# NYU DTCC VIP Final Project 2025 Fall
 
-**NYU DTCC VIP Final Project 2025 Fall**
+**SBOM Generator with Dynamic Dependency Capture**
 
-A tool that automatically generates Software Bill of Materials (SBOMs) and captures dynamically linked dependencies at runtime, then merges them back into the SBOM.
+A comprehensive tool that automatically generates Software Bill of Materials (SBOMs) and captures dynamically linked dependencies at runtime, then merges them back into the SBOM.
 
 ## Demo Results
 
-See [DEMO-RESULTS.md](DEMO-RESULTS.md) for actual test results and performance metrics from running the tool.
+See [sbom-dynamic-capture/DEMO-RESULTS.md](sbom-dynamic-capture/DEMO-RESULTS.md) for actual test results and performance metrics from running the tool.
 
 ## Overview
 
@@ -68,6 +68,7 @@ brew install strace
 ### Basic Usage
 
 ```bash
+cd sbom-dynamic-capture
 ./sbom-with-dynamic.sh <target> <run-command>
 ```
 
@@ -76,6 +77,8 @@ brew install strace
 #### Java Application
 
 ```bash
+cd sbom-dynamic-capture
+
 # Generate SBOM for a Java app and capture dynamic JARs
 ./sbom-with-dynamic.sh ./myapp "java -jar myapp.jar"
 
@@ -86,6 +89,8 @@ brew install strace
 #### Maven Project
 
 ```bash
+cd sbom-dynamic-capture
+
 # Scan project directory and run with Maven
 ./sbom-with-dynamic.sh ./myproject "mvn exec:java -Dexec.mainClass=com.example.App"
 ```
@@ -93,6 +98,8 @@ brew install strace
 #### Directory Scan
 
 ```bash
+cd sbom-dynamic-capture
+
 # Just generate static SBOM (no runtime capture)
 ./sbom-with-dynamic.sh ./project-dir ""
 ```
@@ -173,21 +180,42 @@ cd log4j-week1/log4j-dynamic-demo
 ../../sbom-dynamic-capture/sbom-with-dynamic.sh . "java -cp target/log4j-dynamic-demo-1.0-SNAPSHOT.jar com.example.App"
 ```
 
+Or use the test script:
+
+```bash
+cd sbom-dynamic-capture
+./test-demo.sh
+```
+
 **Result:**
-- Static SBOM: 0 Log4j components (not in pom.xml)
-- Dynamic capture: 2 Log4j JARs found (from runtime-libs/)
-- Final SBOM: 2 Log4j components with full metadata
+- Static SBOM: 8 components found (including Log4j from directory scan)
+- Dynamic capture: 0 components (macOS dtruss limitation - see DEMO-RESULTS.md)
+- Final SBOM: 8 components with full metadata
+
+See [DEMO-RESULTS.md](sbom-dynamic-capture/DEMO-RESULTS.md) for detailed test results.
 
 ## Project Structure
 
 ```
-sbom-dynamic-capture/
-├── sbom-with-dynamic.sh    # Main tool script
-├── merge-sbom.py           # SBOM merger (Python)
-├── README.md               # This file
-├── output/                 # Generated SBOMs (gitignored)
-│   └── sbom-with-dynamic.json
-└── .tmp/                   # Temporary files (gitignored)
+DTCC-VIP-NYU/
+├── README.md                    # This file (project overview)
+├── sbom-dynamic-capture/         # Main tool directory
+│   ├── sbom-with-dynamic.sh     # Main tool script
+│   ├── merge-sbom.py            # SBOM merger (Python)
+│   ├── test-demo.sh             # Test script
+│   ├── DEMO-RESULTS.md          # Test results and performance
+│   ├── EXAMPLES.md              # Usage examples
+│   ├── QUICKSTART.md            # Quick start guide
+│   ├── TESTING.md               # Testing guide
+│   ├── REQUIREMENTS.md          # Prerequisites
+│   ├── PROJECT-SUMMARY.md       # Project overview
+│   ├── output/                  # Generated SBOMs (gitignored)
+│   └── .tmp/                    # Temporary files (gitignored)
+└── log4j-week1/                 # Demo projects
+    ├── log4j-static-demo/      # Static Log4j demo
+    ├── log4j-dynamic-demo/      # Dynamic Log4j demo
+    ├── demo-strace.sh           # strace demonstration
+    └── ...                      # Documentation and examples
 ```
 
 ## Limitations
@@ -221,7 +249,33 @@ Educational project - see course guidelines.
 - [strace Manual](https://man7.org/linux/man-pages/man1/strace.1.html)
 - [OWASP SBOM](https://owasp.org/www-community/SBOM)
 
+## Quick Start
+
+1. **Install prerequisites** (see [sbom-dynamic-capture/REQUIREMENTS.md](sbom-dynamic-capture/REQUIREMENTS.md))
+2. **Run the test demo:**
+   ```bash
+   cd sbom-dynamic-capture
+   ./test-demo.sh
+   ```
+3. **Check results:**
+   ```bash
+   cat output/sbom-with-dynamic.json | jq '.components[] | {name, version, purl}'
+   ```
+
+## Documentation
+
+- **[DEMO-RESULTS.md](sbom-dynamic-capture/DEMO-RESULTS.md)** - Actual test results and performance
+- **[QUICKSTART.md](sbom-dynamic-capture/QUICKSTART.md)** - 5-minute setup guide
+- **[EXAMPLES.md](sbom-dynamic-capture/EXAMPLES.md)** - Usage examples
+- **[TESTING.md](sbom-dynamic-capture/TESTING.md)** - Testing guide
+- **[PROJECT-SUMMARY.md](sbom-dynamic-capture/PROJECT-SUMMARY.md)** - Detailed project overview
+
 ## Author
 
+**Arda Dinc**  
 NYU DTCC VIP Final Project 2025 Fall
+
+## Repository
+
+**GitHub:** [NYU-DTCC-VIP-Final-Project-2025-Fall---Arda-Dinc](https://github.com/Arda-Dinc04/NYU-DTCC-VIP-Final-Project-2025-Fall---Arda-Dinc)
 
