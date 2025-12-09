@@ -4,6 +4,10 @@
 
 A tool that automatically generates Software Bill of Materials (SBOMs) and captures dynamically linked dependencies at runtime, then merges them back into the SBOM.
 
+## 📊 Demo Results
+
+See [DEMO-RESULTS.md](DEMO-RESULTS.md) for actual test results and performance metrics from running the tool.
+
 ## Overview
 
 This tool addresses a critical gap in SBOM generation: **static SBOMs miss dynamically loaded libraries**. Many applications load libraries at runtime that aren't declared in build files (e.g., `pom.xml`, `package.json`). This tool:
